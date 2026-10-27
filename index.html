@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#5B35D5">
+<title>StackMate — Study Smarter</title>
+<style>
+:root{--purple:#7546e8;--deep:#30205f;--blue:#238bd8;--lav:#f0eaff;--ink:#25213b;--muted:#716d85;--line:#e8e4f2;--green:#138a67;--orange:#f08a35;--red:#e35470;--white:#fff;--shadow:0 12px 35px #39216c12;--teal:#16a6a1;--coral:#ff6f7d;--yellow:#f6c94b}
+*{box-sizing:border-box}body{margin:0;background:#f7f6fc;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #9b87ff;outline-offset:2px}
+.app{max-width:1200px;margin:auto;min-height:100vh;display:grid;grid-template-columns:245px 1fr;background:#f7f6fc}
+.sidebar{background:linear-gradient(165deg,#25114f,#4d2bb7 68%,#3268d9);color:#fff;padding:26px 17px;display:flex;flex-direction:column;gap:24px;min-height:100vh;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:11px;padding:0 9px}.logo{width:42px;height:42px;border-radius:14px;background:#fff;color:var(--purple);display:grid;place-items:center;font-size:23px;font-weight:900;box-shadow:0 8px 18px #14093440}.brand strong{font-size:20px;letter-spacing:-.5px}.brand small{display:block;color:#d8ccff;font-size:11px;margin-top:2px}
+.nav-label{font-size:10px;text-transform:uppercase;letter-spacing:1.7px;color:#c7b9f5;padding:0 12px;margin-bottom:-13px}.nav{display:grid;gap:7px}.nav button{background:transparent;color:#e7e0ff;text-align:left;padding:12px 13px;border-radius:13px;display:flex;align-items:center;gap:12px;font-weight:650;font-size:13px}.nav button .ico{width:22px;text-align:center;font-size:17px}.nav button.active,.nav button:hover{background:#ffffff20;color:white}.side-tip{margin-top:auto;padding:16px;border:1px solid #ffffff2c;background:#ffffff12;border-radius:18px}.side-tip b{font-size:13px}.side-tip p{font-size:12px;line-height:1.55;color:#e3dcff;margin:8px 0 0}.main{min-width:0;padding:26px 30px 45px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:25px}.eyebrow{color:var(--purple);font-size:11px;text-transform:uppercase;font-weight:850;letter-spacing:1.5px}.topbar h1{font-size:27px;letter-spacing:-1px;margin:5px 0 0}.date-pill{background:#fff;border:1px solid var(--line);padding:10px 14px;border-radius:13px;color:var(--muted);font-size:12px;font-weight:700}
+.page{display:none;animation:fade .22s ease}.page.active{display:block}@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.hero{background:linear-gradient(115deg,#4c25b9,#6650e8 58%,#347de8);color:white;padding:25px 27px;border-radius:23px;display:flex;justify-content:space-between;align-items:center;gap:20px;position:relative;overflow:hidden;box-shadow:0 16px 35px #5632bf25}.hero:after{content:"";position:absolute;width:210px;height:210px;border:35px solid #ffffff12;border-radius:50%;right:8%;top:-120px}.hero-content{position:relative;z-index:1}.hero .tag{display:inline-block;padding:6px 10px;background:#ffffff20;border-radius:99px;font-size:10px;font-weight:800;letter-spacing:.8px}.hero h2{font-size:25px;letter-spacing:-.8px;line-height:1.18;margin:13px 0 8px;max-width:480px}.hero p{font-size:13px;line-height:1.6;color:#e8e1ff;margin:0;max-width:460px}.hero-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:17px}.btn{padding:11px 14px;border-radius:11px;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn.white{background:white;color:var(--purple)}.btn.glass{background:#ffffff20;color:white;border:1px solid #ffffff40}.btn.primary{background:var(--purple);color:white}.btn.blue{background:var(--blue);color:white}.btn.soft{background:#eee9ff;color:var(--purple)}.btn.green{background:#e1f7ed;color:#08784d}.btn.red{background:#fff0f1;color:#bd2d47}.btn.outline{background:white;border:1px solid var(--line);color:var(--ink)}.btn.small{padding:8px 10px;font-size:11px}
+.hero-art{position:relative;z-index:1;font-size:82px;min-width:110px;text-align:center;filter:drop-shadow(0 12px 10px #2a145d44)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:17px 0 25px}.stat{background:#fff;border:1px solid var(--line);border-radius:17px;padding:16px;box-shadow:var(--shadow)}.stat-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:11px;font-weight:750}.stat-icon{width:31px;height:31px;border-radius:10px;background:var(--lav);display:grid;place-items:center;font-size:15px}.stat strong{display:block;font-size:25px;letter-spacing:-1px;margin:11px 0 2px}.stat small{font-size:10px;color:var(--muted)}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 13px}.section-head h3{margin:0;font-size:16px;letter-spacing:-.3px}.section-head p{margin:4px 0 0;font-size:11px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:16px}.card{background:white;border:1px solid var(--line);border-radius:19px;padding:19px;box-shadow:var(--shadow);min-width:0}.task-list{display:grid;gap:9px}.task{border:1px solid #eee9f8;border-radius:13px;padding:12px;display:flex;align-items:center;gap:11px}.check{width:21px;height:21px;border:2px solid #c8bddf;border-radius:7px;background:white;flex-shrink:0;color:white}.check.done{background:var(--green);border-color:var(--green)}.task-copy{flex:1;min-width:0}.task-copy b{display:block;font-size:12px;overflow-wrap:anywhere}.task-copy small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.task.done-task .task-copy b{text-decoration:line-through;color:#999}.chip{font-size:9px;font-weight:800;border-radius:99px;padding:5px 8px;background:#f0eaff;color:var(--purple);white-space:nowrap}.chip.high{background:#fff0df;color:#a95708}.chip.done{background:#e3f7ed;color:#08784d}
+.method-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.method{border:1px solid var(--line);border-radius:15px;padding:14px;text-align:left;background:white;transition:.15s}.method:hover{border-color:#a997f0;transform:translateY(-2px);box-shadow:var(--shadow)}.method .method-icon{font-size:23px}.method b{display:block;font-size:12px;margin:8px 0 5px}.method p{margin:0;color:var(--muted);font-size:10px;line-height:1.5}.method span{display:inline-block;margin-top:10px;color:var(--purple);font-size:10px;font-weight:850}
+.page-intro{margin-bottom:18px}.page-intro h2{font-size:23px;margin:0 0 7px;letter-spacing:-.7px}.page-intro p{margin:0;color:var(--muted);font-size:13px;line-height:1.6;max-width:700px}
+.study-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:17px;align-items:start}.method-tabs{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:15px}.method-tabs button{border:1px solid var(--line);background:#fff;color:var(--muted);padding:9px 11px;border-radius:10px;font-size:11px;font-weight:800}.method-tabs button.active{background:var(--purple);border-color:var(--purple);color:white}.study-card{padding:22px}.study-card h3{margin:0 0 7px;font-size:18px}.study-card>p{color:var(--muted);font-size:12px;line-height:1.65;margin:0 0 17px}.steps{display:grid;gap:10px;counter-reset:step}.step{display:flex;gap:11px;padding:12px;background:#faf9ff;border:1px solid #eee9fa;border-radius:13px}.step-num{width:26px;height:26px;display:grid;place-items:center;background:#eae3ff;color:var(--purple);border-radius:9px;font-size:11px;font-weight:900;flex-shrink:0}.step b{font-size:12px}.step p{font-size:11px;color:var(--muted);line-height:1.5;margin:4px 0 0}
+.timer-card{background:linear-gradient(160deg,#29145f,#5130c3 70%,#3176de);color:white;border-radius:21px;padding:22px;text-align:center;box-shadow:0 16px 32px #40208d20}.timer-card .timer-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#d8cdff;font-weight:850}.timer-card h3{margin:8px 0 0;font-size:16px}.timer{font-size:55px;letter-spacing:-2px;font-weight:850;margin:16px 0 6px;font-variant-numeric:tabular-nums}.timer-note{font-size:11px;color:#ded6ff;min-height:30px;line-height:1.5}.timer-controls{display:flex;gap:7px;justify-content:center;margin:15px 0}.timer-controls .btn{flex:1}.timer-card .btn.white{color:var(--deep)}.timer-presets{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}.timer-presets button{padding:7px 9px;background:#ffffff1c;color:#fff;border:1px solid #ffffff38;border-radius:8px;font-size:10px;font-weight:800}.timer-presets button.active{background:#fff;color:var(--purple)}.timer-progress{height:5px;border-radius:99px;background:#ffffff2c;overflow:hidden;margin-top:16px}.timer-progress span{display:block;height:100%;width:0;background:#a7f3d0;transition:width .3s}
+.form-row{display:flex;gap:8px}.field{display:grid;gap:6px;margin-bottom:12px;flex:1;min-width:0}.field label{font-size:11px;color:var(--muted);font-weight:800}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:#fff;color:var(--ink);font-size:12px}.field textarea{resize:vertical;min-height:75px}.form-card{max-width:740px}.empty{padding:24px;text-align:center;border:1px dashed #d8ceef;border-radius:14px;color:var(--muted);font-size:12px;line-height:1.7}.empty strong{display:block;color:var(--ink);font-size:13px;margin-bottom:4px}
+.quiz-options{display:grid;gap:9px;margin:16px 0}.quiz-options button{text-align:left;background:#faf9ff;border:1px solid var(--line);border-radius:12px;padding:13px;font-size:12px;color:var(--ink)}.quiz-options button:hover{border-color:var(--purple)}.quiz-options button.correct{background:#e2f8ec;border-color:#72d4a5}.quiz-options button.wrong{background:#fff0f1;border-color:#ef9aa7}.feedback{padding:12px;border-radius:12px;font-size:12px;line-height:1.5;margin-top:12px;display:none}.feedback.show{display:block}.feedback.good{background:#e3f8ed;color:#086846}.feedback.bad{background:#fff0f1;color:#a72b42}
+.stack-visual{display:flex;gap:8px;align-items:end;min-height:105px;padding:12px;background:#faf9ff;border:1px dashed #d8ceef;border-radius:13px;overflow:auto}.stack-block{background:linear-gradient(120deg,#7048df,#3978e8);color:white;padding:10px;border-radius:9px;min-width:70px;text-align:center;font-size:10px;font-weight:800}.stack-block small{display:block;font-size:9px;font-weight:500;opacity:.8;margin-top:4px}.stack-top-label{font-size:10px;color:var(--purple);font-weight:850;margin-bottom:7px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#26134f;color:#fff;border-radius:12px;padding:12px 16px;font-size:12px;box-shadow:0 10px 35px #160b3440;z-index:20;display:none;max-width:90vw}.toast.show{display:block;animation:fade .2s}
+.bottom-nav{display:none}.footer-note{font-size:10px;color:var(--muted);text-align:center;margin-top:22px}
+@media(max-width:900px){.app{grid-template-columns:205px 1fr}.main{padding:22px 19px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.study-layout{grid-template-columns:minmax(0,1fr) 280px}.hero-art{font-size:60px;min-width:70px}}
+@media(max-width:680px){.app{display:block;padding-bottom:75px}.sidebar{display:none}.main{padding:18px 14px 30px}.topbar{margin-bottom:17px}.topbar h1{font-size:23px}.date-pill{font-size:10px;padding:8px}.hero{padding:21px 19px;border-radius:20px}.hero h2{font-size:22px}.hero p{font-size:12px}.hero-art{display:none}.stats{gap:9px;margin:12px 0 21px}.stat{padding:13px;border-radius:15px}.stat strong{font-size:22px}.grid2,.study-layout{grid-template-columns:1fr}.grid2{gap:12px}.card{padding:16px}.study-layout{gap:13px}.timer-card{order:-1}.timer{font-size:50px}.method-grid{gap:8px}.method{padding:12px}.bottom-nav{position:fixed;z-index:15;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 5px calc(8px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line);box-shadow:0 -8px 25px #24114c0d}.bottom-nav button{background:transparent;color:#817991;display:grid;justify-items:center;gap:3px;font-size:9px;font-weight:800;padding:5px 0}.bottom-nav button span{font-size:18px}.bottom-nav button.active{color:var(--purple)}.form-row{flex-direction:column;gap:0}.page-intro h2{font-size:21px}.section-head h3{font-size:15px}}
+
+/* Theme switcher: light is the default; dark uses the same brand accents. */
+body[data-theme="dark"] {
+  --ink:#f1edff; --muted:#b6accf; --line:#3d315b; --white:#211934;
+  background:#151021; color:var(--ink);
+}
+body[data-theme="dark"] .app { background:#151021; }
+body[data-theme="dark"] .main { background:#151021; }
+body[data-theme="dark"] .date-pill,
+body[data-theme="dark"] .stat,
+body[data-theme="dark"] .card,
+body[data-theme="dark"] .method,
+body[data-theme="dark"] .task,
+body[data-theme="dark"] .field input,
+body[data-theme="dark"] .field textarea,
+body[data-theme="dark"] .field select,
+body[data-theme="dark"] .method-tabs button,
+body[data-theme="dark"] .quiz-options button,
+body[data-theme="dark"] .bottom-nav {
+  background:#211934; color:#f1edff; border-color:#3d315b;
+}
+body[data-theme="dark"] .stat-top,
+body[data-theme="dark"] .stat small,
+body[data-theme="dark"] .section-head p,
+body[data-theme="dark"] .page-intro p,
+body[data-theme="dark"] .study-card>p,
+body[data-theme="dark"] .method p,
+body[data-theme="dark"] .task-copy small,
+body[data-theme="dark"] .field label,
+body[data-theme="dark"] .footer-note { color:#b6accf; }
+body[data-theme="dark"] .task-copy b,
+body[data-theme="dark"] .section-head h3,
+body[data-theme="dark"] .study-card h3,
+body[data-theme="dark"] .page-intro h2,
+body[data-theme="dark"] .method b,
+body[data-theme="dark"] .field input,
+body[data-theme="dark"] .field textarea,
+body[data-theme="dark"] .field select { color:#f1edff; }
+body[data-theme="dark"] .step,
+body[data-theme="dark"] .stack-visual,
+body[data-theme="dark"] .empty,
+body[data-theme="dark"] .quiz-options button { background:#191329; border-color:#3d315b; color:#f1edff; }
+body[data-theme="dark"] .step p { color:#b6accf; }
+body[data-theme="dark"] .step-num { background:#38265e; color:#d8caff; }
+body[data-theme="dark"] .method-tabs button { color:#c4b8df; }
+body[data-theme="dark"] .method-tabs button.active { background:#6d4be8; color:#fff; border-color:#6d4be8; }
+body[data-theme="dark"] .btn.outline { background:#211934; color:#f1edff; border-color:#3d315b; }
+body[data-theme="dark"] .btn.soft { background:#38265e; color:#e3d8ff; }
+body[data-theme="dark"] .side-tip { background:#ffffff0d; }
+body[data-theme="dark"] .bottom-nav button { color:#b6accf; }
+body[data-theme="dark"] .bottom-nav button.active { color:#a994ff; }
+body[data-theme="dark"] .hero { box-shadow:0 16px 35px #00000035; }
+body[data-theme="dark"] .check { background:#211934; border-color:#62527d; }
+body[data-theme="dark"] .check.done { background:#16875d; border-color:#16875d; }
+body[data-theme="dark"] .quiz-options button.correct { background:#123b2c; border-color:#16875d; }
+body[data-theme="dark"] .quiz-options button.wrong { background:#451e2a; border-color:#d9485f; }
+body[data-theme="dark"] .feedback.good { background:#123b2c; color:#a9f0ce; }
+body[data-theme="dark"] .feedback.bad { background:#451e2a; color:#ffc0cb; }
+body[data-theme="dark"] .timer-progress { background:#ffffff24; }
+body[data-theme="dark"] .lab-message { background:#38265e; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}
+
+/* Colorful refresh: a balanced mix of violet, teal, coral, sky blue and sunshine yellow. */
+body{background:#f8f7ff}
+.app{background:#f8f7ff}
+.sidebar{background:linear-gradient(155deg,#30205f 0%,#6942d5 42%,#178fbd 100%)}
+.logo{color:#7546e8}
+.nav button.active,.nav button:hover{background:linear-gradient(100deg,#ffffff2b,#ffffff12);box-shadow:inset 3px 0 #ffd86b}
+.eyebrow{color:#7546e8}
+.hero{background:linear-gradient(112deg,#7546e8 0%,#8b58e9 34%,#238bd8 68%,#16a6a1 100%)}
+.hero .tag{background:#ffd86b;color:#3b286c}
+.hero p{color:#f5f1ff}
+.btn.primary{background:linear-gradient(100deg,#7546e8,#238bd8)}
+.btn.blue{background:linear-gradient(100deg,#238bd8,#16a6a1)}
+.btn.soft{background:#f0eaff;color:#6840cf}
+.btn.green{background:#dff8ee;color:#087451}
+.stat:nth-child(1){border-top:4px solid #7546e8}
+.stat:nth-child(2){border-top:4px solid #16a6a1}
+.stat:nth-child(3){border-top:4px solid #ff6f7d}
+.stat:nth-child(4){border-top:4px solid #f6c94b}
+.stat:nth-child(1) .stat-icon{background:#f0eaff;color:#7546e8}
+.stat:nth-child(2) .stat-icon{background:#ddf8f4;color:#078b85}
+.stat:nth-child(3) .stat-icon{background:#ffe8eb;color:#d74760}
+.stat:nth-child(4) .stat-icon{background:#fff4cf;color:#946500}
+.method:nth-child(1){background:linear-gradient(145deg,#fff 65%,#f0eaff);border-color:#e2d8ff}
+.method:nth-child(2){background:linear-gradient(145deg,#fff 65%,#ddf8f4);border-color:#c9eeea}
+.method:nth-child(3){background:linear-gradient(145deg,#fff 65%,#fff0d9);border-color:#f8e2b7}
+.method:nth-child(4){background:linear-gradient(145deg,#fff 65%,#ffe8eb);border-color:#f7d3d9}
+.method:nth-child(5){background:linear-gradient(145deg,#fff 65%,#e3f1ff);border-color:#d0e6ff}
+.method:nth-child(6){background:linear-gradient(145deg,#fff 65%,#e7f8e9);border-color:#d2efd6}
+.method:nth-child(1) .method-icon,.method:nth-child(1) span{color:#7546e8}
+.method:nth-child(2) .method-icon,.method:nth-child(2) span{color:#078b85}
+.method:nth-child(3) .method-icon,.method:nth-child(3) span{color:#b87800}
+.method:nth-child(4) .method-icon,.method:nth-child(4) span{color:#d74760}
+.method:nth-child(5) .method-icon,.method:nth-child(5) span{color:#237ac7}
+.method:nth-child(6) .method-icon,.method:nth-child(6) span{color:#19844a}
+.method-tabs button.active{background:linear-gradient(100deg,#7546e8,#238bd8);border-color:#7546e8}
+.step:nth-child(4n+1) .step-num{background:#f0eaff;color:#7546e8}
+.step:nth-child(4n+2) .step-num{background:#ddf8f4;color:#078b85}
+.step:nth-child(4n+3) .step-num{background:#fff0d9;color:#946500}
+.step:nth-child(4n) .step-num{background:#ffe8eb;color:#d74760}
+.timer-card{background:linear-gradient(155deg,#30205f 0%,#7546e8 42%,#238bd8 76%,#16a6a1 100%)}
+.timer-progress span{background:#ffd86b}
+.chip{background:#f0eaff;color:#6840cf}
+.chip.high{background:#fff0d9;color:#9a5b00}
+.check.done{background:#16a6a1;border-color:#16a6a1}
+.bottom-nav button.active{color:#7546e8}
+@media(max-width:680px){
+ .bottom-nav button.active{color:#7546e8}
+ .hero{background:linear-gradient(120deg,#7546e8 0%,#8b58e9 35%,#238bd8 72%,#16a6a1 100%)}
+}
+body[data-theme="dark"] .method:nth-child(n){background:#211934;border-color:#3d315b}
+body[data-theme="dark"] .stat:nth-child(n){border-top-color:inherit}
+body[data-theme="dark"] .stat:nth-child(1){border-top-color:#9b7bff}
+body[data-theme="dark"] .stat:nth-child(2){border-top-color:#35c9bf}
+body[data-theme="dark"] .stat:nth-child(3){border-top-color:#ff8290}
+body[data-theme="dark"] .stat:nth-child(4){border-top-color:#f6d36b}
+body[data-theme="dark"] .method:nth-child(1) .method-icon,body[data-theme="dark"] .method:nth-child(1) span{color:#b7a1ff}
+body[data-theme="dark"] .method:nth-child(2) .method-icon,body[data-theme="dark"] .method:nth-child(2) span{color:#62ddd3}
+body[data-theme="dark"] .method:nth-child(3) .method-icon,body[data-theme="dark"] .method:nth-child(3) span{color:#ffd36b}
+body[data-theme="dark"] .method:nth-child(4) .method-icon,body[data-theme="dark"] .method:nth-child(4) span{color:#ff9aa5}
+body[data-theme="dark"] .method:nth-child(5) .method-icon,body[data-theme="dark"] .method:nth-child(5) span{color:#7fc2ff}
+body[data-theme="dark"] .method:nth-child(6) .method-icon,body[data-theme="dark"] .method:nth-child(6) span{color:#7fe3a0}</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">S</div><div><strong>StackMate</strong><small>Study smarter, not longer</small></div></div>
+  <div class="nav-label">Workspace</div>
+  <nav class="nav" aria-label="Main navigation">
+    <button class="active" data-page="home"><span class="ico">⌂</span>Overview</button>
+    <button data-page="study"><span class="ico">◷</span>Study Studio</button>
+    <button data-page="tasks"><span class="ico">✓</span>My Study Plan</button>
+    <button data-page="challenge"><span class="ico">✦</span>Stack Challenge</button>
+    <button data-page="lab"><span class="ico">▤</span>Stack Lab</button>
+  </nav>
+  <div class="side-tip"><b>💡 The 1% rule</b><p>One focused session today is better than a perfect plan you never start. Begin with just 10 minutes.</p></div>
+</aside>
+<main class="main">
+  <header class="topbar"><div><div class="eyebrow">Your personal learning space</div><h1 id="pageTitle">Your study overview</h1></div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end"><button class="btn outline small" id="themeToggle" type="button" aria-label="Switch to dark theme" onclick="toggleTheme()">🌙 Dark</button><div class="date-pill" id="todayDate"></div></div></header>
+
+  <section class="page active" id="page-home">
+    <div class="hero"><div class="hero-content"><span class="tag">✦ YOUR STUDY ERA STARTS HERE</span><h2>Small sessions.<br>Big academic energy.</h2><p>Choose a method, start a focus timer, and turn study time into progress you can actually see.</p><div class="hero-actions"><button class="btn white" onclick="go('study')">▶ Start studying</button><button class="btn glass" onclick="go('tasks')">＋ Plan my day</button></div></div><div class="hero-art" aria-hidden="true">📚</div></div>
+    <div class="stats">
+      <div class="stat"><div class="stat-top">Tasks completed <span class="stat-icon">✓</span></div><strong id="statDone">0</strong><small>Keep building your streak</small></div>
+      <div class="stat"><div class="stat-top">Tasks remaining <span class="stat-icon">☷</span></div><strong id="statLeft">0</strong><small>One task at a time</small></div>
+      <div class="stat"><div class="stat-top">Focus minutes <span class="stat-icon">◷</span></div><strong id="statMinutes">0</strong><small>Minutes tracked this visit</small></div>
+      <div class="stat"><div class="stat-top">Focus sessions <span class="stat-icon">✦</span></div><strong id="statSessions">0</strong><small>Every session counts</small></div>
+    </div>
+    <div class="grid2">
+      <div><div class="section-head"><div><h3>Today's mission</h3><p>Your next best step, not a long to-do list.</p></div><button class="btn soft small" onclick="go('tasks')">Manage →</button></div><div class="card"><div id="homeTasks" class="task-list"></div></div></div>
+      <div><div class="section-head"><div><h3>Pick your learning style</h3><p>Different topics need different methods.</p></div></div><div class="card"><div class="method-grid">
+        <button class="method" onclick="selectMethod('pomodoro');go('study')"><div class="method-icon">🍅</div><b>Pomodoro Sprint</b><p>Focus in short, timed bursts.</p><span>25 min ↗</span></button>
+        <button class="method" onclick="selectMethod('active');go('study')"><div class="method-icon">🧠</div><b>Active Recall</b><p>Close notes and retrieve ideas.</p><span>Test yourself ↗</span></button>
+        <button class="method" onclick="selectMethod('feynman');go('study')"><div class="method-icon">🎤</div><b>Feynman Method</b><p>Teach it in simple words.</p><span>Explain it ↗</span></button>
+        <button class="method" onclick="selectMethod('spaced');go('study')"><div class="method-icon">🗓️</div><b>Spaced Revision</b><p>Review again over time.</p><span>Remember more ↗</span></button>
+      </div></div></div>
+    </div>
+    <div class="footer-note">StackMate demonstrates stack-based Undo/Redo through study planning and learning activities.</div>
+  </section>
+
+  <section class="page" id="page-study">
+    <div class="page-intro"><h2>Study Studio ✨</h2><p>Choose a method based on what you need to do. Start the timer, follow the steps, and record a focused session when you finish.</p></div>
+    <div class="study-layout"><div>
+      <div class="method-tabs" id="methodTabs">
+        <button class="active" data-method="pomodoro">🍅 Pomodoro</button><button data-method="active">🧠 Active recall</button><button data-method="feynman">🎤 Feynman</button><button data-method="blurting">✍️ Blurting</button><button data-method="spaced">🗓️ Spaced revision</button><button data-method="interleaving">🔀 Interleaving</button>
+      </div>
+      <div class="card study-card"><h3 id="methodTitle">Pomodoro Sprint</h3><p id="methodDesc">Work with full attention for a short block, then take a real break. This helps you begin when a task feels too big.</p><div id="methodSteps" class="steps"></div><div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" id="startMethodBtn" onclick="startMethod()">Start this method ↗</button><button class="btn outline" onclick="go('tasks')">Choose a task</button></div></div>
+      <div class="card" style="margin-top:13px"><div class="section-head"><div><h3>Session reflection</h3><p>Make learning active, not just time spent.</p></div></div><div class="field"><label for="reflection">What did you learn or what still feels confusing?</label><textarea id="reflection" placeholder="Example: I can explain arrays, but I need more practice tracing loops..."></textarea></div><button class="btn soft" onclick="saveReflection()">Save reflection</button><div id="reflectionSaved" style="font-size:11px;color:var(--green);margin-top:8px"></div></div>
+    </div>
+    <aside class="timer-card"><div class="timer-label">Focus timer</div><h3 id="timerMode">Pomodoro focus</h3><div class="timer" id="timerDisplay">25:00</div><div class="timer-note" id="timerNote">Your next 25 minutes are for one task only.</div><div class="timer-controls"><button class="btn white" id="timerStart" onclick="toggleTimer()">▶ Start</button><button class="btn glass" onclick="resetTimer()">↺ Reset</button></div><div class="timer-presets"><button data-min="10">10 min</button><button data-min="15">15 min</button><button class="active" data-min="25">25 min</button><button data-min="45">45 min</button></div><div class="timer-progress"><span id="timerBar"></span></div><div style="font-size:10px;color:#ded6ff;margin-top:14px">When finished, record your session to update your dashboard.</div><button class="btn white" style="width:100%;margin-top:13px" onclick="completeSession()">✓ Record focus session</button></aside></div>
+  </section>
+
+  <section class="page" id="page-tasks">
+    <div class="page-intro"><h2>My Study Plan 📝</h2><p>Break your semester goals into clear actions. Use Undo and Redo to see how stack data structures keep track of previous states.</p></div>
+    <div class="grid2"><div class="card form-card"><div class="section-head"><div><h3>Add a study task</h3><p>Keep tasks specific and realistic.</p></div></div><form id="taskForm"><div class="field"><label for="taskName">Task name</label><input id="taskName" required maxlength="90" placeholder="e.g. Practise 5 linked-list questions"></div><div class="form-row"><div class="field"><label for="taskCourse">Course / topic</label><input id="taskCourse" maxlength="50" placeholder="e.g. Data Structures"></div><div class="field"><label for="taskPriority">Priority</label><select id="taskPriority"><option>Normal</option><option>High</option><option>Low</option></select></div></div><div class="field"><label for="taskDuration">Planned minutes</label><select id="taskDuration"><option value="15">15 minutes</option><option value="25" selected>25 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select></div><button class="btn primary" type="submit">＋ Add to my plan</button></form></div>
+    <div class="card"><div class="section-head"><div><h3>Stack-powered controls</h3><p>Every change can be reversed.</p></div></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px"><button class="btn soft" onclick="undo()">↶ Undo</button><button class="btn soft" onclick="redo()">↷ Redo</button><button class="btn outline" onclick="loadDemo()">Load sample tasks</button></div><div class="stack-top-label">UNDO STACK · LAST CHANGE ON TOP</div><div id="undoStack" class="stack-visual"><div class="empty" style="width:100%">No saved changes yet.</div></div><div class="stack-top-label" style="margin-top:14px">REDO STACK</div><div id="redoStack" class="stack-visual"><div class="empty" style="width:100%">No redo actions yet.</div></div></div></div>
+    <div class="card" style="margin-top:15px"><div class="section-head"><div><h3>All study tasks</h3><p id="taskCount">0 tasks</p></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn outline small" onclick="setFilter('all')">All</button><button class="btn outline small" onclick="setFilter('open')">To do</button><button class="btn outline small" onclick="setFilter('done')">Completed</button></div></div><div id="allTasks" class="task-list"></div></div>
+  </section>
+
+  <section class="page" id="page-challenge">
+    <div class="page-intro"><h2>Stack Challenge 🎯</h2><p>Test your understanding of stacks. Answer the question, read the explanation, and build confidence for your data structures exam.</p></div>
+    <div class="grid2"><div class="card"><div class="eyebrow" id="quizCounter">QUESTION 1</div><h3 id="quizQuestion" style="font-size:19px;line-height:1.4;margin:12px 0 0"></h3><div id="quizOptions" class="quiz-options"></div><div id="quizFeedback" class="feedback"></div><div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap"><button class="btn primary" id="nextQuestion" onclick="nextQuiz()" disabled>Next question →</button><button class="btn outline" onclick="restartQuiz()">Restart quiz</button></div></div><div class="card"><div class="section-head"><div><h3>Your challenge score</h3><p>Learn from every answer.</p></div></div><div style="font-size:45px;font-weight:900;color:var(--purple)" id="quizScore">0/0</div><div style="height:8px;background:#eee9f8;border-radius:99px;overflow:hidden;margin:12px 0"><div id="quizScoreBar" style="height:100%;width:0;background:linear-gradient(90deg,#5b35d5,#3677f5)"></div></div><p style="font-size:12px;line-height:1.7;color:var(--muted)">Remember: a stack follows <b style="color:var(--ink)">LIFO</b> — Last In, First Out. The most recently added item is removed first. Examples include undo history, browser backtracking, function calls, and expression evaluation.</p></div></div>
+  </section>
+
+  <section class="page" id="page-lab">
+    <div class="page-intro"><h2>Stack Lab 🔬</h2><p>Play with a real stack. Push items onto the top, pop the latest item off, and watch how the Last In, First Out rule behaves.</p></div>
+    <div class="grid2"><div class="card"><div class="section-head"><div><h3>Build your stack</h3><p>Try adding three subjects, then pop one.</p></div></div><div class="form-row"><div class="field"><label for="stackInput">Item to push</label><input id="stackInput" maxlength="35" placeholder="e.g. Algorithms"></div><button class="btn primary" style="align-self:start;margin-top:21px" onclick="pushItem()">＋ Push</button><button class="btn red" style="align-self:start;margin-top:21px" onclick="popItem()">− Pop</button></div><div class="stack-top-label">TOP ↓</div><div id="labStack" class="stack-visual" style="min-height:190px;align-items:flex-start;flex-direction:column-reverse"></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn outline small" onclick="resetLab()">Reset lab</button><button class="btn soft small" onclick="demoLab()">Load example</button></div></div><div class="card"><h3 style="margin-top:0">What just happened?</h3><div id="labMessage" style="background:#f5f1ff;padding:14px;border-radius:13px;font-size:12px;line-height:1.7">Your stack is empty. Push an item to begin. The newest item always appears at the top.</div><div style="margin-top:17px"><div class="section-head"><div><h3>Stack operation log</h3><p>Observe the order of operations.</p></div></div><div id="labLog" class="task-list"><div class="empty">No operations yet.</div></div></div></div></div>
+  </section>
+</main>
+</div>
+<nav class="bottom-nav" aria-label="Mobile navigation"><button class="active" data-page="home"><span>⌂</span>Home</button><button data-page="study"><span>◷</span>Study</button><button data-page="tasks"><span>✓</span>Plan</button><button data-page="challenge"><span>✦</span>Quiz</button><button data-page="lab"><span>▤</span>Stack Lab</button></nav>
+<div class="toast" id="toast"></div>
+<script>
+const titles={home:"Your study overview",study:"Study Studio",tasks:"My Study Plan",challenge:"Stack Challenge",lab:"Stack Lab"};
+function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));document.getElementById('pageTitle').textContent=titles[page]||"StackMate";window.scrollTo({top:0,behavior:'smooth'});}
+document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+document.getElementById('todayDate').textContent=new Date().toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),2500)}
+let tasks=[],undoStates=[],redoStates=[],filter='all',focusMinutes=0,sessions=0;
+function snapshot(){undoStates.push(JSON.stringify(tasks));if(undoStates.length>20)undoStates.shift();redoStates=[]}
+function saveState(){try{localStorage.setItem('stackmateTasks',JSON.stringify(tasks));localStorage.setItem('stackmateStats',JSON.stringify({focusMinutes,sessions}))}catch(e){}}
+function loadState(){try{tasks=JSON.parse(localStorage.getItem('stackmateTasks')||'[]');let s=JSON.parse(localStorage.getItem('stackmateStats')||'{}');focusMinutes=s.focusMinutes||0;sessions=s.sessions||0}catch(e){tasks=[]}}
+function addTask(name,course,priority,duration,done=false){return {id:Date.now()+Math.random(),name,course:course||'General study',priority:priority||'Normal',duration:Number(duration)||25,done}}
+function taskMarkup(t){return `<div class="task ${t.done?'done-task':''}"><button class="check ${t.done?'done':''}" aria-label="${t.done?'Reopen':'Complete'} task" onclick="toggleTask(${t.id})">${t.done?'✓':''}</button><div class="task-copy"><b>${escapeHtml(t.name)}</b><small>${escapeHtml(t.course)} · ${t.duration} min</small></div><span class="chip ${t.done?'done':t.priority==='High'?'high':''}">${t.done?'Done':escapeHtml(t.priority)}</span><button class="btn outline small" aria-label="Delete task" onclick="deleteTask(${t.id})">×</button></div>`}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderTasks(){let open=tasks.filter(t=>!t.done),done=tasks.filter(t=>t.done);document.getElementById('statDone').textContent=done.length;document.getElementById('statLeft').textContent=open.length;document.getElementById('statMinutes').textContent=focusMinutes;document.getElementById('statSessions').textContent=sessions;document.getElementById('taskCount').textContent=`${tasks.length} task${tasks.length===1?'':'s'} · ${done.length} completed`;let empty='<div class="empty"><strong>No tasks here yet</strong>Add a task or load the sample plan to get started.</div>';document.getElementById('homeTasks').innerHTML=(open.slice(0,3).map(taskMarkup).join(''))||(done.slice(-2).reverse().map(taskMarkup).join(''))||empty;let visible=tasks.filter(t=>filter==='all'||(filter==='open'?!t.done:t.done));document.getElementById('allTasks').innerHTML=visible.map(taskMarkup).join('')||empty;renderStacks();saveState()}
+function toggleTask(id){snapshot();tasks=tasks.map(t=>t.id===id?{...t,done:!t.done}:t);renderTasks();toast('Task updated — change saved to Undo stack')}
+function deleteTask(id){snapshot();tasks=tasks.filter(t=>t.id!==id);renderTasks();toast('Task deleted — use Undo to restore it')}document.getElementById('taskForm').addEventListener('submit',e=>{e.preventDefault();let name=document.getElementById('taskName').value.trim();if(!name)return;snapshot();tasks.push(addTask(name,document.getElementById('taskCourse').value.trim(),document.getElementById('taskPriority').value,document.getElementById('taskDuration').value));e.target.reset();document.getElementById('taskDuration').value='25';filter='all';renderTasks();toast('Task added to your plan!')});
+function setFilter(f){filter=f;renderTasks()}
+function undo(){if(!undoStates.length){toast('Nothing to undo yet');return}redoStates.push(JSON.stringify(tasks));tasks=JSON.parse(undoStates.pop());renderTasks();toast('Undo: previous task state restored')}
+function redo(){if(!redoStates.length){toast('Nothing to redo yet');return}undoStates.push(JSON.stringify(tasks));tasks=JSON.parse(redoStates.pop());renderTasks();toast('Redo: change restored')}
+function renderStacks(){function stackHtml(arr){let vals=arr.slice(-4).reverse();return vals.length?vals.map((s,i)=>`<div class="stack-block">${i===0?'TOP · ':''}State ${arr.length-i}<small>${JSON.parse(s).length} tasks</small></div>`).join(''):'<div class="empty" style="width:100%">Stack is empty.</div>'}document.getElementById('undoStack').innerHTML=stackHtml(undoStates);document.getElementById('redoStack').innerHTML=stackHtml(redoStates)}
+function loadDemo(){snapshot();tasks=[addTask('Review stack operations: push, pop, peek','Data Structures','High',25),addTask('Practise 5 JavaScript questions','Web Technology','Normal',45),addTask('Explain one concept without notes','Active recall','High',15),addTask('Revise yesterday’s lecture notes','Revision','Low',15)];filter='all';renderTasks();toast('Sample study plan loaded')}
+const methods={
+pomodoro:{title:'Pomodoro Sprint',desc:'Work with full attention for a short block, then take a real break. This helps you begin when a task feels too big.',mins:25,steps:[['Choose one outcome','Write one thing you will finish, such as tracing two algorithms.'],['Focus until the timer ends','Silence notifications and keep only the materials you need open.'],['Take a real short break','Stand, stretch, drink water, and rest your eyes for 5 minutes.'],['Repeat and review','After several rounds, take a longer break and note what you learned.']]},
+active:{title:'Active Recall',desc:'Strengthen memory by retrieving information before looking at your notes. Excellent for definitions, processes, and exam preparation.',mins:15,steps:[['Preview a small topic','Read a heading or learning objective, not the entire chapter.'],['Close your notes','Write or say everything you remember from memory.'],['Check and correct','Compare with your notes and mark missing or incorrect details.'],['Test again later','Turn gaps into questions and retry them without looking.']]},
+feynman:{title:'Feynman Method',desc:'If you can explain an idea simply, you probably understand it. Use this for programming concepts, networks, and theory.',mins:15,steps:[['Choose one concept','For example, explain what a stack is and how LIFO works.'],['Teach it simply','Explain aloud as if teaching a friend with no background.'],['Find the confusing part','Where you hesitate, return to your notes or an example.'],['Simplify and test','Use a simple analogy, then explain it again without notes.']]},
+blurting:{title:'Blurting',desc:'A fast revision technique that exposes gaps. Best after a lecture or when revising a topic you have already studied.',mins:10,steps:[['Set a short timer','Choose a topic and put your notes away.'],['Write everything you remember','Do not stop to check notes or make it look perfect.'],['Compare with the source','Use another pen or highlight what you missed.'],['Fix the top three gaps','Review those points and do a short second blurt.']]},
+spaced:{title:'Spaced Revision',desc:'Review information across several days instead of cramming once. Use it to keep important concepts accessible.',mins:15,steps:[['Learn and test today','Understand the topic, then answer questions from memory.'],['Review tomorrow','Try recall first, then check errors.'],['Review after a few days','Use fresh questions or explain the topic aloud.'],['Return next week','Keep difficult ideas in rotation until recall feels easy.']]},
+interleaving:{title:'Interleaving Practice',desc:'Mix related problem types so you practise choosing the right approach, not just repeating one pattern.',mins:25,steps:[['Pick 2–3 related skills','For example, arrays, stacks, and queues.'],['Alternate the questions','Do one of each type instead of ten identical questions.'],['Name the clue','Explain why a question needs a particular method.'],['Review mistakes by type','Practise the weakest category again after a short break.']]}
+};
+let currentMethod='pomodoro';
+function selectMethod(key){currentMethod=methods[key]?key:'pomodoro';let m=methods[currentMethod];document.querySelectorAll('[data-method]').forEach(b=>b.classList.toggle('active',b.dataset.method===currentMethod));document.getElementById('methodTitle').textContent=m.title;document.getElementById('methodDesc').textContent=m.desc;document.getElementById('methodSteps').innerHTML=m.steps.map((s,i)=>`<div class="step"><div class="step-num">${i+1}</div><div><b>${s[0]}</b><p>${s[1]}</p></div></div>`).join('');document.getElementById('timerMode').textContent=m.title;setTimer(m.mins)}
+document.querySelectorAll('[data-method]').forEach(b=>b.addEventListener('click',()=>selectMethod(b.dataset.method)));
+function startMethod(){go('study');if(!timerRunning)toggleTimer();toast('You’ve started: '+methods[currentMethod].title)}
+let timerSeconds=1500,timerTotal=1500,timerRunning=false,timerInterval=null;
+function setTimer(min){clearInterval(timerInterval);timerRunning=false;timerTotal=min*60;timerSeconds=timerTotal;updateTimer();document.getElementById('timerStart').textContent='▶ Start';document.querySelectorAll('[data-min]').forEach(b=>b.classList.toggle('active',Number(b.dataset.min)===min))}
+function updateTimer(){let m=Math.floor(timerSeconds/60),s=timerSeconds%60;document.getElementById('timerDisplay').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');document.getElementById('timerBar').style.width=((timerTotal-timerSeconds)/timerTotal*100)+'%';document.getElementById('timerNote').textContent=timerRunning?'Stay with one task. You are doing better than you think.':timerSeconds===0?'Time is up! Take a breath, then record your session.':'Ready when you are. Choose one task and begin.'}
+function toggleTimer(){if(timerRunning){clearInterval(timerInterval);timerRunning=false;document.getElementById('timerStart').textContent='▶ Resume';updateTimer();return}if(timerSeconds===0)setTimer(25);timerRunning=true;document.getElementById('timerStart').textContent='Ⅱ Pause';updateTimer();timerInterval=setInterval(()=>{timerSeconds--;if(timerSeconds<=0){timerSeconds=0;clearInterval(timerInterval);timerRunning=false;document.getElementById('timerStart').textContent='▶ Start';updateTimer();toast('Focus timer complete! Great work.');return}updateTimer()},1000)}
+function resetTimer(){setTimer(Math.max(1,Math.round(timerTotal/60)));toast('Timer reset')}
+document.querySelectorAll('[data-min]').forEach(b=>b.addEventListener('click',()=>setTimer(Number(b.dataset.min))));
+function completeSession(){let elapsed=Math.floor((timerTotal-timerSeconds)/60);if(timerSeconds===timerTotal&&timerRunning===false){elapsed=Math.round(timerTotal/60)}if(elapsed<1)elapsed=1;focusMinutes+=elapsed;sessions++;saveState();renderTasks();setTimer(methods[currentMethod].mins);toast('Focus session recorded: +'+elapsed+' minutes')}
+function saveReflection(){let val=document.getElementById('reflection').value.trim();if(!val){toast('Write a quick reflection first');return}let all=JSON.parse(localStorage.getItem('stackmateReflections')||'[]');all.unshift({text:val,date:new Date().toLocaleString()});localStorage.setItem('stackmateReflections',JSON.stringify(all.slice(0,30)));document.getElementById('reflectionSaved').textContent='Saved locally at '+new Date().toLocaleTimeString();toast('Reflection saved on this device')}
+const questions=[
+{q:'A stack follows which principle?',o:['First In, First Out (FIFO)','Last In, First Out (LIFO)','Random In, Random Out','Shortest Item First'],a:1,e:'Correct! The last item pushed onto a stack is the first one popped off.'},
+{q:'You type A, then B, then C. If you press Undo once, which change is reversed first?',o:['Typing A','Typing B','Typing C','All three at once'],a:2,e:'Undo reverses the most recent action first: C. This is a stack’s LIFO behaviour.'},
+{q:'Which operation adds an item to the top of a stack?',o:['Pop','Peek','Push','Dequeue'],a:2,e:'Push adds an item to the top. Pop removes the top item; peek views it without removing it.'},
+{q:'Which real-world feature commonly uses a stack?',o:['Undo in a text editor','A printer queue in arrival order','A playlist shuffled randomly','A phone contact list alphabetically'],a:0,e:'Undo history commonly stores previous states or actions so the most recent one can be reversed first.'},
+{q:'A stack contains 4, then 7, then 9. What does pop return?',o:['4','7','9','The average'],a:2,e:'9 was added last, so it is at the top and is removed first.'},
+{q:'What does peek/top usually do?',o:['Deletes every item','Shows the top item without removing it','Sorts the stack','Adds an item to the bottom'],a:1,e:'Peek inspects the top item while leaving the stack unchanged.'}
+];let quizIndex=0,quizAnswered=false,quizCorrect=0,quizCount=0;
+function renderQuiz(){let q=questions[quizIndex];quizAnswered=false;document.getElementById('quizCounter').textContent=`QUESTION ${quizIndex+1} OF ${questions.length}`;document.getElementById('quizQuestion').textContent=q.q;document.getElementById('quizOptions').innerHTML=q.o.map((v,i)=>`<button onclick="answerQuiz(${i})">${String.fromCharCode(65+i)}. ${v}</button>`).join('');let f=document.getElementById('quizFeedback');f.className='feedback';f.textContent='';document.getElementById('nextQuestion').disabled=true;document.getElementById('nextQuestion').textContent=quizIndex===questions.length-1?'Finish quiz':'Next question →';document.getElementById('quizScore').textContent=`${quizCorrect}/${quizCount}`;document.getElementById('quizScoreBar').style.width=(quizCount?quizCorrect/quizCount*100:0)+'%'}
+function answerQuiz(i){if(quizAnswered)return;quizAnswered=true;let q=questions[quizIndex];quizCount++;let good=i===q.a;if(good)quizCorrect++;document.querySelectorAll('#quizOptions button').forEach((b,j)=>{if(j===q.a)b.classList.add('correct');if(j===i&&!good)b.classList.add('wrong')});let f=document.getElementById('quizFeedback');f.className='feedback show '+(good?'good':'bad');f.textContent=(good?'✓ Correct! ':'Not quite. ')+q.e;document.getElementById('nextQuestion').disabled=false;document.getElementById('quizScore').textContent=`${quizCorrect}/${quizCount}`;document.getElementById('quizScoreBar').style.width=(quizCorrect/quizCount*100)+'%'}
+function nextQuiz(){if(!quizAnswered)return;if(quizIndex===questions.length-1){toast(`Quiz complete: ${quizCorrect}/${quizCount}. Try again to improve!`);restartQuiz();return}quizIndex++;renderQuiz()}
+function restartQuiz(){quizIndex=0;quizAnswered=false;quizCorrect=0;quizCount=0;renderQuiz()}
+let labStack=[],labLogs=[];
+function renderLab(){document.getElementById('labStack').innerHTML=labStack.length?labStack.slice().reverse().map((v,i)=>`<div class="stack-block" style="width:100%;text-align:left">${i===0?'TOP · ':''}${escapeHtml(v)}<small>${i===0?'Next item to pop':'Item in stack'}</small></div>`).join(''):'<div class="empty" style="width:100%">Stack is empty. Push an item to begin.</div>';document.getElementById('labLog').innerHTML=labLogs.length?labLogs.slice(0,6).map(l=>`<div class="task"><div class="task-copy"><b>${escapeHtml(l.title)}</b><small>${escapeHtml(l.detail)}</small></div><span class="chip">${escapeHtml(l.op)}</span></div>`).join(''):'<div class="empty">No operations yet.</div>'}
+function pushItem(){let v=document.getElementById('stackInput').value.trim();if(!v){toast('Enter an item to push');return}labStack.push(v);labLogs.unshift({title:'Push: '+v,detail:`Stack size is now ${labStack.length}.`,op:'PUSH'});document.getElementById('stackInput').value='';document.getElementById('labMessage').innerHTML=`<b>${escapeHtml(v)}</b> was pushed onto the top. It is now the next item that Pop will remove. Stack size: ${labStack.length}.`;renderLab()}
+function popItem(){if(!labStack.length){document.getElementById('labMessage').textContent='Underflow: the stack is empty, so there is no item to pop.';toast('Stack underflow — nothing to pop');return}let v=labStack.pop();labLogs.unshift({title:'Pop: '+v,detail:`Removed last-added item. Stack size: ${labStack.length}.`,op:'POP'});document.getElementById('labMessage').innerHTML=`<b>${escapeHtml(v)}</b> was removed because it was at the top. This demonstrates Last In, First Out (LIFO).`;renderLab()}
+function resetLab(){labStack=[];labLogs=[];document.getElementById('labMessage').textContent='Stack cleared. Push an item to begin again.';renderLab()}
+function demoLab(){labStack=['Data Structures','Web Technology','Networking'];labLogs.unshift({title:'Loaded demo stack',detail:'Three subjects pushed in order.',op:'DEMO'});document.getElementById('labMessage').textContent='The stack was loaded in this order: Data Structures, Web Technology, Networking. Networking is on top and will pop first.';renderLab()}
+
+function applyTheme(theme){
+  const chosen = theme === 'dark' ? 'dark' : 'light';
+  document.body.dataset.theme = chosen;
+  const btn = document.getElementById('themeToggle');
+  if(btn){
+    btn.textContent = chosen === 'dark' ? '☀️ Light' : '🌙 Dark';
+    btn.setAttribute('aria-label', chosen === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    btn.title = chosen === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+  }
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.content = chosen === 'dark' ? '#151021' : '#5B35D5';
+  try { localStorage.setItem('stackmateTheme', chosen); } catch(e) {}
+}
+function toggleTheme(){ applyTheme(document.body.dataset.theme === 'dark' ? 'light' : 'dark'); }
+try { applyTheme(localStorage.getItem('stackmateTheme') || 'light'); } catch(e) { applyTheme('light'); }
+
+loadState();renderTasks();selectMethod('pomodoro');renderQuiz();renderLab();
+</script>
+</body>
+</html>
